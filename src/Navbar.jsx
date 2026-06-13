@@ -67,25 +67,47 @@ function Navbar() {
   const [genre, setGenre] = useState("");
   const [sort, setSort] = useState("relevance");
 
-  useEffect(() => {
-  setLoading(true);
+useEffect(() => {
+  const fetchGames = async () => {
+    try {
+      setLoading(true);
+       const apiPlatform = platform === "mobile" ? "all" : platform;
 
-  // build URL based on filters
-  let url = `https://corsproxy.io/?https://www.freetogame.com/api/games?platform=${platform}`;
-  if (genre) url += `&category=${genre}`;
-  if (sort) url += `&sort-by=${sort}`;
+      let apiUrl = `https://www.freetogame.com/api/games`;
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      setGames(data);
+      if (apiPlatform !== "all") {
+        apiUrl += `?platform=${apiPlatform}`;
+      }
+
+    if (genre) {
+  apiUrl += `${apiUrl.includes("?") ? "&" : "?"}category=${genre}`;
+}
+
+if (sort) {
+  apiUrl += `${apiUrl.includes("?") ? "&" : "?"}sort-by=${sort}`;
+}
+
+      console.log(apiUrl);
+
+      const res = await fetch(apiUrl);
+      const data = await res.json();
+
+      console.log("SUCCESS:", data);
+      if (Array.isArray(data)) {
+  setGames(data);
+} else {
+  console.error("API returned:", data);
+  setGames([]);
+}
+    } catch (err) {
+      console.error("ERROR", err);
+    } finally {
       setLoading(false);
-    })
-    .catch((err) => {
-      console.error(err);
-      setLoading(false);
-    });
-}, [platform, genre, sort]); // re-fetches whenever filters change
+    }
+  };
+
+  fetchGames();
+}, [platform, genre, sort]);
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#0e0e0e" }}>
@@ -241,7 +263,7 @@ function Navbar() {
            
             <LuLogOut size={14} />
             {!collapsed && (
-              <span style={{frontSize:13, display: "flex", alignItems: "center", justifyContent:"center",}}>Sign Out</span>
+              <span style={{fontSize:13, display: "flex", alignItems: "center", justifyContent:"center",}}>Sign Out</span>
             )}
           </div>
 
@@ -268,7 +290,7 @@ function Navbar() {
 
           <option value="mobile">Mobile</option>
           <option value="pc">PC (Windows) </option>
-          <option value="pc">PC (Windows), Web Browser</option>
+          <option value="all">PC (Windows), Web Browser</option>
           <option value="browser">Web Browser</option>
         </select>
         <span style={{ position: "absolute", right: 10, top: "50%",
@@ -341,7 +363,7 @@ function Navbar() {
       gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
       gap: 16,
     }}>
-      {games.map((game) => (
+      {Array.isArray(games) && games.map((game) => (
         <div key={game.id} style={{
           background: "#161616", border: "1px solid #222",
           borderRadius: 10, overflow: "hidden", cursor: "pointer",
