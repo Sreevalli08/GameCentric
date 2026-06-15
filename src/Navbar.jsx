@@ -64,8 +64,9 @@ function Navbar() {
   const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
   const [platform, setPlatform] = useState("all");
-  const [genre, setGenre] = useState("");
+  const [category, setCategory] = useState("");
   const [sort, setSort] = useState("relevance");
+  const [search, setSearch] = useState("");
 
 useEffect(() => {
   const fetchGames = async () => {
@@ -79,8 +80,8 @@ useEffect(() => {
         apiUrl += `?platform=${apiPlatform}`;
       }
 
-    if (genre) {
-  apiUrl += `${apiUrl.includes("?") ? "&" : "?"}category=${genre}`;
+    if (category) {
+  apiUrl += `${apiUrl.includes("?") ? "&" : "?"}category=${category}`;
 }
 
 if (sort) {
@@ -88,11 +89,17 @@ if (sort) {
 }
 
       console.log(apiUrl);
+      console.log("Platform:", platform);
+      console.log("Category:", category);
+      console.log("URL:", apiUrl);
 
       const res = await fetch(apiUrl);
       const data = await res.json();
 
       console.log("SUCCESS:", data);
+      console.log("First Game:", data[0]);
+      console.log("Genre:", data[0]?.genre);
+      console.log("Title:", data[0]?.title);
       if (Array.isArray(data)) {
   setGames(data);
 } else {
@@ -107,7 +114,11 @@ if (sort) {
   };
 
   fetchGames();
-}, [platform, genre, sort]);
+}, [platform, category, sort]);
+
+const filteredGames = games.filter((game) => 
+game.title.toLowerCase().includes(search.toLowerCase())
+)
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#0e0e0e" }}>
@@ -161,6 +172,9 @@ if (sort) {
           <input
             type="text"
             placeholder="Search..."
+            value={search}
+            onChange={(e)=> setSearch(e.target.value)}
+
             style={{ flex: 1, background: "none", border: "none",
               outline: "none", color: "#ccc", fontSize: 13 }}
           />
@@ -301,17 +315,17 @@ if (sort) {
 
     {/* Genre */}
     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-      <span style={{ fontSize: 11, color: "#f8f4f4" }}>Genre/Tag:</span>
+      <span style={{ fontSize: 11, color: "#f8f4f4" }}>Category:</span>
       <div style={{ position: "relative" }}>
         <select
-          value={genre}
-          onChange={(e) => setGenre(e.target.value)}
+          value={category}
+          onChange={(e) => setCategory(e.target.value)}
           style={{ background: "#1a1a1a", border: "1px solid #2a2a2a",
             borderRadius: 8, color: "#ccc", fontSize: 13,
             padding: "7px 28px 7px 10px", cursor: "pointer",
             outline: "none", appearance: "none", width: 180 }}
         >
-          <option value="">All Genres</option>
+          <option value="">All Categories</option>
           <option value="shooter">Shooter</option>
           <option value="battle-royale">Battle Royale</option>
           <option value="moba">MOBA</option>
@@ -363,11 +377,22 @@ if (sort) {
       gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
       gap: 16,
     }}>
-      {Array.isArray(games) && games.map((game) => (
+      {Array.isArray(filteredGames) && filteredGames.map((game) => (
         <div key={game.id} style={{
           background: "#161616", border: "1px solid #222",
-          borderRadius: 10, overflow: "hidden", cursor: "pointer",
-        }}>
+          borderRadius: 10, overflow: "hidden", cursor: "pointer", transition: "all 0.5s ease",
+        }}
+
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(74,222,128,0.25)";
+          
+          }}
+            onMouseLeave={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+          e.currentTarget.style.boxShadow = "none";
+          
+  }}>
           {/* Thumbnail */}
           <img
             src={game.thumbnail}
