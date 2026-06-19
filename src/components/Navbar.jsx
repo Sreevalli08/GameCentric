@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   LuPanelLeft,
   LuTrophy,
@@ -27,6 +28,7 @@ const supportNavItems = [
   { icon: <LuShieldAlert size={20} />, label: "Privacy Policy" },
   { icon: <LuShieldQuestion size={20} />, label: "FAQ" },
 ];
+
 
 //  NavItem 
 const NavItem = ({ icon, label, active, setActive, collapsed}) => (
@@ -67,6 +69,10 @@ function Navbar() {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("relevance");
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  
+
+  const handleSignOut = () => {navigate("/")};
 
 useEffect(() => {
   const fetchGames = async () => {
@@ -265,6 +271,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
 
           {/* Sign Out */}
           <div
+          onClick={handleSignOut}
             style={{
               borderTop: "1px solid #2a2a2a",
               padding: "12px 14px",
@@ -378,9 +385,15 @@ game.title.toLowerCase().includes(search.toLowerCase())
       gap: 16,
     }}>
       {Array.isArray(filteredGames) && filteredGames.map((game) => (
-        <div key={game.id} style={{
-          background: "#161616", border: "1px solid #222",
-          borderRadius: 10, overflow: "hidden", cursor: "pointer", transition: "all 0.5s ease",
+        <div key={game.id} 
+        onClick={() => window.open(game.game_url, "_blank")}
+        style={{
+          background: "#161616",
+           border: "1px solid #222",
+          borderRadius: 10,
+           overflow: "hidden", 
+           cursor: "pointer", 
+           transition: "all 0.5s ease",
         }}
 
           onMouseEnter={(e) => {
@@ -405,7 +418,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
             <span style={{ background: "#f97316", color: "#fff",
               fontSize: 10, fontWeight: 600, padding: "3px 8px",
               borderRadius: "4px 0 0 4px" }}>Free</span>
-            <span style={{ background: "#2a2a2a", color: "#aaa",
+            <span style={{ background: "#2a2a2a", color: "#f2eded",
               fontSize: 10, padding: "3px 8px",
               borderRadius: "0 4px 4px 0" }}>{game.platform}</span>
           </div>
@@ -420,7 +433,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
 
           {/* Description */}
           <p style={{ padding: "0 10px 8px", fontSize: 11,
-            color: "#555", margin: 0, lineHeight: 1.5,
+            color: "#cfc9c9", margin: 0, lineHeight: 1.5,
             display: "-webkit-box", WebkitLineClamp: 2,
             WebkitBoxOrient: "vertical", overflow: "hidden" }}>
             {game.short_description}
