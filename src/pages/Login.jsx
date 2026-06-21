@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import Hero from "../Hero.png";
 import IndiaFlag from "../IndiaFlag.png";
+//import Subscribe from "./Subscribe";
+import "./Login.css";
+
 
 function Login (){
 
     const [phone, setPhone] = useState("");
     const navigate = useNavigate();
+   // const [subscribe, setSubscribe] = useState("");
 
     const handleSignIn = () => {
 
@@ -19,72 +23,35 @@ function Login (){
         navigate("/games");
     };
 
+    const handleSubscribe = () => {
+
+    navigate("/subscribe")
+
+    };
+
 
     return(
+      <>
 
-<div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
-      <div
-  style={{
-    height: "70px",
-    background: "#111",
-    borderBottom: "1px solid #222",
-    display: "flex",
-    alignItems: "center",
-    padding: "0 30px",
-    fontWeight: "700",
-    fontSize: "22px",
-    color: "#eff6f2",
-  }}
+<div className="page-wrapper"
 >
   Vodacom
 </div>
 
-<div 
-     style={{
-        display:"flex",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: "160px",
-        padding: "40px 80px",
-        height: "100vh",
-        background: "#0e0e0e",
-        color: "#fff",
-    
-     }}>
+<div className="login-container">
+   
 
- <div 
-    style={{flex: 1.2,
-       display:"flex",
-       justifyContent:"center",
-       alignItems:"center",
-             
-   }}
+ <div className="hero-section"
    >
-   <img src={Hero} alt="Game Centric"
-   style={{
-    width: "80%",
-    
-    objectFit: "contain",
 
-   }}
+   <img src={Hero} alt="Game Centric"
+
    />
 </div>
 
-<div style={{
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: "40px",
-}}
+<div className="form-section"
 >
-<div
-  style={{
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    marginBottom: "20px",
-  }}
+<div className="logo-section"
 >
   {/* G Logo */}
   <div
@@ -124,11 +91,7 @@ function Login (){
   </h1>
 </div>
 
-    <h2   style={{
-    fontSize: "28px",
-    fontWeight: "400",
-     maxWidth: "320px",
-  }}
+    <h2 className="form-heading"
   >
     Unlock the Possibility of <span  style={{ color: "#22c55e" }}>Gaming</span></h2>
     <p>Enter the Arena - Your Game Awaits...</p>
@@ -136,7 +99,8 @@ function Login (){
 
 <div 
    style={{
-    width: "420px",
+    maxWidth: "420px",
+    width: "100%",
    }}
    >
     <label>Phone Number</label>
@@ -154,43 +118,29 @@ function Login (){
   }}
 >
   <div
-    style={{
-      display: "flex",
-      alignItems: "center",
-      gap: "8px",
-      padding: "0 12px",
-      borderRight: "1px solid #333",
-      flexShrink: 0,
-    }}
+    className="country-code"
   >
     <img
       src={IndiaFlag}
       alt="Flag"
-      style={{
-        width: "34px",
-        height: "24px",
-        objectFit: "cover",
-      }}
+  
     />
 
-    <span>+91</span>
-    <span>▼</span>
+    <select className="country-select">
+  <option value="+91">+91</option>
+</select>
+    
   </div>
 
   <input
     type="tel"
+    className="phone-input"
+     inputMode="numeric"
     maxLength={10}
     placeholder="Enter Your Phone Number"
     value={phone}
     onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
-    style={{
-      flex: 1,
-      padding: "12px",
-      background: "transparent",
-      border: "none",
-      outline: "none",
-      color: "#fff",
-    }}
+
   />
 </div>
 
@@ -199,19 +149,11 @@ function Login (){
 </p>
 
 
-        <div
-  style={{
-    display: "flex",
-    justifyContent: "end",
-    gap: "12px",
-    marginTop: "20px",
-    width:"420",
-    paddingRight:"60px",
-   
-  }}
+        <div className="action-buttons"
 >
 
         <button 
+        onClick={handleSubscribe}
         style={{
       background: "#f97316",
       color: "#fff",
@@ -249,7 +191,7 @@ function Login (){
 </div>
 </div>
 </div>
-</div>
+</>
 
  );
 

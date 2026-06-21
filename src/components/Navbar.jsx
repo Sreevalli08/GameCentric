@@ -14,6 +14,7 @@ import {
   LuBell,
   LuLogOut,
 } from "react-icons/lu";
+import "../App.css"
 
 const mainNavItems = [
   { icon: <LuTrophy size={20} />, label: "Tournaments" },
@@ -60,7 +61,7 @@ const NavItem = ({ icon, label, active, setActive, collapsed}) => (
 );
 
 function Navbar() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(window.innerWidth < 768);
   const [active, setActive] = useState("Play Hub");
   const [supportOpen, setSupportOpen] = useState(false);
   const [games, setGames] = useState([]);
@@ -127,10 +128,10 @@ game.title.toLowerCase().includes(search.toLowerCase())
 )
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#0e0e0e" }}>
+    <div className="app-layout"style={{ display: "flex", flexDirection: "column", height: "100vh", background: "#0e0e0e" }}>
 
       {/* ── Topbar ── */}
-      <div style={{
+      <div  className="topbar" style={{
         display: "flex",
         alignItems: "center",
         gap: 12,
@@ -169,7 +170,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
         </button>
 
         {/* Search */}
-        <div style={{
+        <div className="search-box" style={{
           flex: 1, maxWidth: 320, display: "flex", alignItems: "center", gap: 8,
           background: "#1a1a1a", border: "1px solid #2a2a2a",
           borderRadius: 8, padding: "0 12px", height: 36,
@@ -179,7 +180,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
             type="text"
             placeholder="Search..."
             value={search}
-            onChange={(e)=> setSearch(e.target.value)}
+            onChange={(e) => setSearch(e.target.value)}
 
             style={{ flex: 1, background: "none", border: "none",
               outline: "none", color: "#ccc", fontSize: 13 }}
@@ -194,7 +195,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
         </button>
 
         {/* Profile */}
-        <div style={{
+        <div className="profile-icon" style={{
           width: 32, height: 32, borderRadius: "50%", background: "#4ade80",
           display: "flex", alignItems: "center", justifyContent: "center",
           color: "#0e0e0e", fontSize: 18, fontWeight: 600, cursor: "pointer",
@@ -208,7 +209,7 @@ game.title.toLowerCase().includes(search.toLowerCase())
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
 
         {/* Sidebar */}
-        <div style={{
+        <div className="sidebar" style={{
           width: collapsed ? 52 : 220,
           transition: "width 0.25s ease",
           background: "#161616",
@@ -291,10 +292,10 @@ game.title.toLowerCase().includes(search.toLowerCase())
         </div>
 
         {/* Main content */}
-<div style={{ flex: 1, padding: 24, color: "#fff", overflowY: "auto" }}>
+<div className="main-content" style={{ flex: 1, padding: 24, color: "#fff", overflowY: "auto" }}>
 
   {/* Filters */}
-  <div style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap", marginBottom: 20 }}>
+  <div className="filters-container" style={{ display: "flex", justifyContent: "center", gap: 16, flexWrap: "wrap", marginBottom: 20 }}>
 
     {/* Platform */}
     <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
@@ -379,9 +380,10 @@ game.title.toLowerCase().includes(search.toLowerCase())
   {loading ? (
     <p style={{ color: "#d3d0d0", fontSize: 13 }}>Loading games...</p>
   ) : (
-    <div style={{
+    <div className="games-grid" style={{
       display: "grid",
-      gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
+      gridTemplateColumns: "repeat(auto-fit, minmax(280px, 300px))",
+    justifyContent: "center",
       gap: 16,
     }}>
       {Array.isArray(filteredGames) && filteredGames.map((game) => (

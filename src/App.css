@@ -1,38 +1,109 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 16px;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* ===== Mobile & Tablet Responsive ===== */
+
+@media (max-width: 1024px) {
+
+  .filters-container {
+    justify-content: center !important;
   }
-  to {
-    transform: rotate(360deg);
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+  }
+}
+
+
+/* Tablet */
+@media (max-width: 768px) {
+
+  .topbar {
+    padding: 0 8px !important;
+    gap: 8px !important;
+  }
+
+  .search-box {
+    max-width: 180px !important;
+  }
+
+  .main-content {
+    padding: 16px !important;
+  }
+
+  .games-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+  .sidebar {
+    width: 52px !important;
+  }
+
+  .main-content {
+    padding: 12px !important;
+  }
+
+  .filters-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px !important;
+  }
+
+  .filters-container select {
+    width: 100% !important;
+    max-width: 280px;
+  }
+
+  .games-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .search-box {
+    max-width: 120px !important;
+  }
+
+  .profile-icon {
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 14px !important;
+  }
+}
+
+
+/* Small phones */
+@media (max-width: 400px) {
+
+  .topbar {
+    gap: 4px !important;
+  }
+
+  .search-box {
+    max-width: 90px !important;
+  }
+
+  .search-box input {
+    font-size: 11px !important;
+  }
+
+  .main-content {
+    padding: 8px !important;
+  }
+
+  .games-grid {
+    gap: 12px !important;
+  }
+
+  .filters-container select {
+    max-width: 100%;
   }
 }

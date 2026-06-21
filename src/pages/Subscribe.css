@@ -1,0 +1,120 @@
+.subscribe-page {
+  min-height: 100vh;
+  background: linear-gradient(
+    135deg,
+    #8b0000 0%,
+    #c40000 40%,
+    #e60000 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* Dot Pattern */
+.subscribe-page::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      rgba(255,255,255,0.12) 1px,
+      transparent 1px
+    );
+
+  background-size: 16px 16px;
+
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.subscribe-navbar {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 30px;
+  height: 70px;
+  background: #5b3030;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.subscribe-content {
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px;
+  position: relative;
+  z-index: 2;
+}
+
+.subscribe-card {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  color: white;
+}
+
+.subscribe-input,
+.subscribe-select {
+  width: 100%;
+  padding: 14px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.subscribe-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.signin-link {
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .subscribe-navbar {
+    gap: 20px;
+    font-size: 14px;
+    padding: 0 15px;
+  }
+
+  .subscribe-page::before {
+    width: 500px;
+    height: 500px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .subscribe-navbar {
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+    padding: 15px;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .subscribe-card {
+    max-width: 100%;
+  }
+
+  .subscribe-page::before {
+    width: 300px;
+    height: 300px;
+    right: -50px;
+    top: 100px;
+  }
+}
