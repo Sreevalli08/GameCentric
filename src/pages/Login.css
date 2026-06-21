@@ -84,9 +84,11 @@
 .phone-input {
   flex: 1;
   min-width: 0; /* Important */
-    padding: 12px 12px; 
+  padding: 12px 12px; 
   font-size: 15px;
   background-color: #0e0e0e;
+  color:  #ffffff;
+  
 }
 
 .action-buttons {
